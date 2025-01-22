@@ -1,0 +1,3 @@
+Для работы в папке TeachFastAPI нужно установить:
+-fastapi[all]
+-uvicorn[standard]
