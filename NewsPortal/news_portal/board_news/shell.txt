@@ -1,4 +1,4 @@
-from BoardNews.models import Author, Category, Post, PostCategory, Comment
+from board_news.models import Author, Category, Post, PostCategory, Comment
 from django.contrib.auth.models import User
 
 Задание1. Создать двух пользователей (с помощью метода User.objects.create_user('username')).

@@ -48,6 +48,9 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.title
+
     def preview(self):
         if len(self.text) > 124:
             return f'{self.text[:124]}...'

@@ -38,21 +38,21 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255)),
                 ('text', models.TextField()),
                 ('rating', models.IntegerField(default=0)),
-                ('author_post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='BoardNews.author')),
+                ('author_post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board_news.author')),
             ],
         ),
         migrations.CreateModel(
             name='PostCategory',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='BoardNews.category')),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='BoardNews.post')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board_news.category')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board_news.post')),
             ],
         ),
         migrations.AddField(
             model_name='post',
             name='categories',
-            field=models.ManyToManyField(through='BoardNews.PostCategory', to='BoardNews.category'),
+            field=models.ManyToManyField(through='board_news.PostCategory', to='board_news.category'),
         ),
         migrations.CreateModel(
             name='Comment',
@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                 ('date_time_in', models.DateTimeField(auto_now_add=True)),
                 ('rating', models.IntegerField(default=0)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='BoardNews.post')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board_news.post')),
             ],
         ),
     ]
