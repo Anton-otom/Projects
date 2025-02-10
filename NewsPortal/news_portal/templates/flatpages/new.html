@@ -5,5 +5,7 @@ New
 {% endblock title %}
 
 {% block content %}
-{{ new }}
+    <h2>{{ new.title }}</h2>
+    <h3>{{ new.date_time_in|date:'d M Y' }}</h3>
+    {{ new.text }}
 {% endblock content %}
