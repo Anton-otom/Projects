@@ -3,6 +3,6 @@ from .views import NewList, NewDetail
 
 
 urlpatterns = [
-    path('', NewList.as_view()),
-    path('<int:pk>', NewDetail.as_view()),
+    path('', NewList.as_view()),  # Адрес страницы со всеми новостями
+    path('<int:pk>', NewDetail.as_view()),  # Адрес страницы с отдельной новостью
 ]
