@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
 {% block title %}
     News List
 {% endblock title %}
@@ -7,7 +9,7 @@
 {% block content %}
     <h3>Добавлено новостей: {{ news|length }}</h3>
     {% if news %}
-        <table>
+        <table align="center">
             <tr>
                 <td>Заголовок</td>
                 <td>Дата публикации</td>
@@ -15,9 +17,9 @@
             </tr>
             {% for new in news %}
                 <tr>
-                    <td align="left">{{ new.title }}</td>
-                    <td>{{ new.date_time_in|date:'d M Y' }}</td>
-                    <td>{{ new.text|truncatechars:20 }}</td>
+                    <td align="left">{{ new.title|censor }}</td>
+                    <td>{{ new.date_time_in|date:'d M Y H:i' }}</td>
+                    <td>{{ new.text|censor|truncatechars:21 }}</td>
                 </tr>
             {% endfor %}
         </table>

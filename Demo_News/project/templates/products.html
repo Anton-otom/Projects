@@ -1,13 +1,16 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+{% load custom_tags %}
+
 {% block title %}
 Products
 {% endblock title %}
 
 {% block content %}
     <h1>Все товары</h1>
-    <h3>{{ time_now|date:'d M Y'}}</h3>
-    <h3>{{ next_sale|default_if_none:"Пусто" }}</h3>
+    <h3>{% current_time '%d %b %Y' %}</h3>
+    <h3>{{ next_sale|default_if_none:"Скоро распродажа!" }}</h3>
     {% if products %}
         <table>
             <tr>
@@ -22,7 +25,7 @@ Products
                     <td>{{ product.name }}</td>
                     <td>{{ product.description|truncatewords:2 }}</td>
                     <td>{{ product.category.name }}</td>
-                    <td>{{ product.price }}</td>
+                    <td>{{ product.price|currency }}</td>
                     <td>{{ product.quantity }}</td>
                 </tr>
             {% endfor %}
