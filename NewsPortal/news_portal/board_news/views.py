@@ -11,6 +11,7 @@ class PostList(ListView):
     ordering = '-date_time_in'
     template_name = 'flatpages/news.html'
     context_object_name = 'news'
+    paginate_by = 10
 
 
 # Представление для отдельного поста
