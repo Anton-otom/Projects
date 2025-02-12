@@ -3,11 +3,11 @@
 {% load custom_filters %}
 
 {% block title %}
-New
+Пост
 {% endblock title %}
 
 {% block content %}
-    <h2>{{ new.title|censor }}</h2>
-    <h3>{{ new.date_time_in|date:'d M Y' }}</h3>
-    {{ new.text|censor }}
+    <h2>{{ post.title|censor }}</h2>
+    <h3>{{ post.date_time_in|date:'d M Y' }}</h3>
+    {{ post.text|censor }}
 {% endblock content %}

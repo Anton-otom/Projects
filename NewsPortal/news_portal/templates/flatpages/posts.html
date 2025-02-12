@@ -4,24 +4,24 @@
 {% load custom_tags %}
 
 {% block title %}
-    Посты
+    Все посты
 {% endblock title %}
 
 {% block content %}
-    <h3>Добавлено постов: {{ news|length }}</h3>
+    <h3>Всего постов: {{ posts|length }}</h3>
     <!--Таблица вывода новостей-->
-    {% if news %}
+    {% if posts %}
         <table align="center">
             <tr>
                 <td>Заголовок</td>
                 <td>Дата публикации</td>
                 <td>Превью</td>
             </tr>
-            {% for new in news %}
+            {% for post in posts %}
                 <tr>
-                    <td align="left">{{ new.title|censor }}</td>
-                    <td>{{ new.date_time_in|date:'d M Y H:i' }}</td>
-                    <td>{{ new.text|censor|truncatechars:21 }}</td>
+                    <td align="left">{{ post.title|censor }}</td>
+                    <td>{{ post.date_time_in|date:'d M Y H:i' }}</td>
+                    <td>{{ post.text|censor|truncatechars:21 }}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -10,8 +10,8 @@ from .forms import PostForm
 class PostList(ListView):
     model = Post
     ordering = '-date_time_in'
-    template_name = 'flatpages/news.html'
-    context_object_name = 'news'
+    template_name = 'flatpages/posts.html'
+    context_object_name = 'posts'
     paginate_by = 10
 
 
@@ -35,12 +35,12 @@ class PostSearch(PostList):
 # Представление для отдельного поста
 class PostDetail(DetailView):
     model = Post
-    template_name = 'flatpages/new.html'
-    context_object_name = 'new'
+    template_name = 'flatpages/post.html'
+    context_object_name = 'post'
 
 
 # Представление для создания поста
 class PostCreate(CreateView):
     form_class = PostForm
     model = Post
-    template_name = 'flatpages/post_edit.html'
+    template_name = 'flatpages/news_create.html'
