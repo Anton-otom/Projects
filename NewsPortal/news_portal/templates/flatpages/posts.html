@@ -22,6 +22,14 @@
                     <td align="left">{{ post.title|censor }}</td>
                     <td>{{ post.date_time_in|date:'d M Y H:i' }}</td>
                     <td>{{ post.text|censor|truncatechars:21 }}</td>
+                    <td><a href="{% url 'post_detail' post.pk %}">Перейти</a></td>
+                    {% if post.type_post == 'nw' %}
+                        <td><a href="{% url 'news_update' post.pk %}">Изменить</a></td>
+                        <td><a href="{% url 'news_delete' post.pk %}">Удалить</a></td>
+                    {% elif post.type_post == 'ar' %}
+                        <td><a href="{% url 'article_update' post.pk %}">Изменить</a></td>
+                        <td><a href="{% url 'article_delete' post.pk %}">Удалить</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

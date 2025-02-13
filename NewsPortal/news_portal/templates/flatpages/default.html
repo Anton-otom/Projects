@@ -35,46 +35,53 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
+                               href="{% url 'post_search' %}">
+                                Поиск по постам
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active"
                                href="{% url 'news_create' %}">
                                 Добавить новость
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
-                               href="{% url 'post_search' %}">
-                                Поиск по постам
+                               href="{% url 'article_create' %}">
+                                Добавить статью
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                               id="navbarDropdown"
-                               href="#" role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Action
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Another action
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Something else here
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+<!--                        <li class="nav-item dropdown ">-->
+<!--                            <a class="nav-link dropdown-toggle active"-->
+<!--                               id="navbarDropdown-news"-->
+<!--                               href="#"-->
+<!--                               role="button"-->
+<!--                               data-bs-toggle="dropdown"-->
+<!--                               aria-expanded="false">-->
+<!--                                Новости-->
+<!--                            </a>-->
+<!--                            <ul class="dropdown-menu dropdown-menu-end"-->
+<!--                                aria-labelledby="navbarDropdown">-->
+<!--                                <li>-->
+<!--                                    <a class="dropdown-item"-->
+<!--                                       href="{% url 'news_create' %}">-->
+<!--                                        Добавить новость-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a class="dropdown-item"-->
+<!--                                       href="#">-->
+<!--                                        Изменить новость-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a class="dropdown-item"-->
+<!--                                       href="#">-->
+<!--                                        Удалить новость-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -88,5 +95,7 @@
                 </div>
             </div>
         </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

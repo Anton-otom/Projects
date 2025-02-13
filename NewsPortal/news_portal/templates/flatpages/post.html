@@ -10,4 +10,15 @@
     <h2>{{ post.title|censor }}</h2>
     <h3>{{ post.date_time_in|date:'d M Y' }}</h3>
     {{ post.text|censor }}
+    {% if post.type_post == 'nw' %}
+        <br>
+        <td><a href="{% url 'news_update' post.pk %}">Изменить</a></td>
+        <br>
+        <td><a href="{% url 'news_delete' post.pk %}">Удалить</a></td>
+    {% elif post.type_post == 'ar' %}
+        <br>
+        <td><a href="{% url 'article_update' post.pk %}">Изменить</a></td>
+        <br>
+        <td><a href="{% url 'article_delete' post.pk %}">Удалить</a></td>
+    {% endif %}
 {% endblock content %}

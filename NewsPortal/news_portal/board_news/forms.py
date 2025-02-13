@@ -1,29 +1,36 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import CheckboxSelectMultiple
 
 from .models import Post
 
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=20)
+    text = forms.CharField(min_length=20, label="Текст")
 
     class Meta:
         model = Post
         fields = [
-            'type_post',
-            'categories',
             'title',
+            'categories',
             'text',
         ]
+        labels = {
+            'title': "Заголовок",
+            'categories': "Категории",
+        }
+        widgets = {
+            'categories': CheckboxSelectMultiple,
+        }
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #
-    #     description = cleaned_data.get("description")
-    #     name = cleaned_data.get("name")
-    #
-    #     if name == description:
-    #         raise ValidationError(
-    #             "Описание не должно быть идентичным названию."
-    #         )
-    #     return cleaned_data
+    def clean(self):
+        cleaned_data = super().clean()
+
+        text = cleaned_data.get("text")
+        title = cleaned_data.get("title")
+
+        if title == text:
+            raise ValidationError(
+                "Текст не должен быть идентичным заголовку."
+            )
+        return cleaned_data

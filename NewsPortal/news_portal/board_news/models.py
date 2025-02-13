@@ -31,6 +31,9 @@ class Author(models.Model):
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return self.category_name.title()
+
 
 class Post(models.Model):
     news = 'nw'
