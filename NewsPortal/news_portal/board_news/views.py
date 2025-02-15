@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -5,7 +7,7 @@ from django.views.generic import (
 
 from .filters import PostFilter
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, LoginForm
 
 
 # Представление для ленты постов
@@ -57,10 +59,11 @@ class NewsCreate(CreateView):
 
 
 # Представление для изменения новости
-class NewsUpdate(UpdateView):
+class NewsUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/news_update.html'
+    login_url = 'login'
 
 
 # Представление для удаления новости
@@ -87,10 +90,11 @@ class ArticleCreate(CreateView):
 
 
 # Представление для изменения статьи
-class ArticleUpdate(UpdateView):
+class ArticleUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/article_update.html'
+    login_url = 'login'
 
 
 # Представление для удаления статьи
@@ -98,3 +102,9 @@ class ArticleDelete(DeleteView):
     model = Post
     template_name = 'flatpages/article_delete.html'
     success_url = reverse_lazy('post_list')
+
+
+# Представление для входа в учётную запись
+class MyLoginView(LoginView):
+    form_class = LoginForm
+    template_name = 'registration/login.html'

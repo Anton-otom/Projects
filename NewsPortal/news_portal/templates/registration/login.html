@@ -1,15 +1,14 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-Изменить новость
+Вход в учётную запись
 {% endblock title %}
 
 {% block content %}
-<h1>Изменить новость</h1>
-<hr>
+<br>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Сохранить">
+    <input type="submit" value="Войти">
 </form>
 {% endblock content %}

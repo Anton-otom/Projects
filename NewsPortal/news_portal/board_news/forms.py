@@ -1,10 +1,12 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.forms import CheckboxSelectMultiple
 
 from .models import Post
 
 
+# Форма для создания и изменения поста
 class PostForm(forms.ModelForm):
     text = forms.CharField(min_length=20, label="Текст")
 
@@ -34,3 +36,12 @@ class PostForm(forms.ModelForm):
                 "Текст не должен быть идентичным заголовку."
             )
         return cleaned_data
+
+
+# Форма для входа в учётную запись
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label="Имя пользователя")
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput
+    )

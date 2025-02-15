@@ -3,6 +3,7 @@ from .views import (
     PostList, PostDetail, PostSearch,
     NewsCreate, NewsUpdate, NewsDelete,
     ArticleCreate, ArticleUpdate, ArticleDelete,
+    MyLoginView,
 )
 
 
@@ -16,4 +17,5 @@ urlpatterns = [
     path('article/create/', ArticleCreate.as_view(), name='article_create'),  # Адрес страницы добавления статьи
     path('article/<int:pk>/update/', ArticleUpdate.as_view(), name='article_update'),  # Адрес страницы изменения статьи
     path('article/<int:pk>/delete/', ArticleDelete.as_view(), name='article_delete'),  # Адрес страницы удаления статьи
+    path('login/', MyLoginView.as_view(), name='login'),  # Адрес страницы для входа в учётную запись
 ]
