@@ -57,6 +57,8 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = 'post_list'
+
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
 

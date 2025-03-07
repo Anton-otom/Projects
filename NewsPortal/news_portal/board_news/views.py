@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -57,7 +58,7 @@ class NewsCreate(CreateView):
 
 
 # Представление для изменения новости
-class NewsUpdate(UpdateView):
+class NewsUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/news_update.html'
@@ -87,7 +88,7 @@ class ArticleCreate(CreateView):
 
 
 # Представление для изменения статьи
-class ArticleUpdate(UpdateView):
+class ArticleUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/article_update.html'
