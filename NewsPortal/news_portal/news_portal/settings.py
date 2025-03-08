@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-51whj5s@syzg4#l7l-r0_#7d2_(dqeshmzh$386x!l#7=ng$$n
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 INSTALLED_APPS = [
@@ -22,9 +22,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'fpages',
-    'django_filters',
-    'board_news',
+    'fpages',  # Расширение админ-панели
+    'django_filters',  # Кастомные фильтры
+    'board_news',  # Вывод постов и операции с ними
+    'allauth',  # Расширение аутентификации и регистрации
+    'allauth.account',  # Расширение аутентификации и регистрации
+    'allauth.socialaccount',  # Расширение аутентификации и регистрации
+    # 'allauth.socialaccount.providers.yandex',
 ]
 
 SITE_ID = 1
@@ -52,12 +56,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',  # Расширение аутентификации и регистрации
             ],
         },
     },
 ]
 
-LOGIN_REDIRECT_URL = 'post_list'
+
+AUTHENTICATION_BACKENDS = [
+    # Аутентификация по 'username' из 'django'
+    'django.contrib.auth.backends.ModelBackend',
+    # Аутентификация по эл. почте или сервис-провайдеру из 'allauth'
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_URL = '/accounts/login/'  # Адрес авторизации
+
+LOGIN_REDIRECT_URL = 'post_list'  # Адрес после успешной авторизации
+
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
