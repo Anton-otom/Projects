@@ -14,7 +14,7 @@
         <!--Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">Информационный портал</a>
+                <a class="navbar-brand" href="{% url 'post_list' %}">Информационный портал</a>
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
@@ -29,28 +29,40 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active"
-                               href="{% url 'post_list' %}">
-                                Все посты
+                                href="{% url 'post_search' %}">
+                                    Поиск по постам
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
-                               href="{% url 'post_search' %}">
-                                Поиск по постам
+                                href="{% url 'news_create' %}">
+                                    Добавить новость
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active"
-                               href="{% url 'news_create' %}">
-                                Добавить новость
+                                href="{% url 'article_create' %}">
+                                    Добавить статью
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active"
-                               href="{% url 'article_create' %}">
-                                Добавить статью
-                            </a>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-link active">
+                                Пользователь: {{request.user.username}}
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                    href="{% url 'account_logout' %}">
+                                        Выйти
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                    href="{% url 'account_login' %}">
+                                        Войти
+                                </a>
+                            </li>
+                        {% endif %}
 <!--                        <li class="nav-item dropdown ">-->
 <!--                            <a class="nav-link dropdown-toggle active"-->
 <!--                               id="navbarDropdown-news"-->
@@ -86,6 +98,7 @@
                 </div>
             </div>
         </nav>
+
         <!-- Page content-->
         <div class="container">
             <div class="row">
@@ -95,6 +108,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

@@ -66,13 +66,21 @@ TEMPLATES = [
 AUTHENTICATION_BACKENDS = [
     # Аутентификация по 'username' из 'django'
     'django.contrib.auth.backends.ModelBackend',
-    # Аутентификация по эл. почте или сервис-провайдеру из 'allauth'
+    # Аутентификация по e-mail или сервис-провайдеру из 'allauth'
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-LOGIN_URL = '/accounts/login/'  # Адрес авторизации
+ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводится e-mail
+ACCOUNT_UNIQUE_EMAIL = True  # E-mail должен быть уникальным
+ACCOUNT_USERNAME_REQUIRED = False  # При регистрации не обязательно вводить username
+ACCOUNT_AUTHENTICATION_METHOD = 'username'  # Аутентификация проводится по username
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # Верификация e-mail отсутствует
+
+LOGIN_URL = 'account_login'  # Адрес авторизации
 
 LOGIN_REDIRECT_URL = 'post_list'  # Адрес после успешной авторизации
+
+LOGOUT_REDIRECT_URL = 'post_list'  # Адрес после выходы из системы
 
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
