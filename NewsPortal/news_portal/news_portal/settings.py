@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
+    'sign'  # Приложение для кастомизации 'allauth'
     # 'allauth.socialaccount.providers.yandex',
 ]
 
@@ -70,10 +71,10 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводится e-mail
+ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводить e-mail
 ACCOUNT_UNIQUE_EMAIL = True  # E-mail должен быть уникальным
-ACCOUNT_USERNAME_REQUIRED = False  # При регистрации не обязательно вводить username
-ACCOUNT_AUTHENTICATION_METHOD = 'username'  # Аутентификация проводится по username
+ACCOUNT_USERNAME_REQUIRED = True  # При регистрации обязательно вводить username
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # Верификация e-mail отсутствует
 
 LOGIN_URL = 'account_login'  # Адрес авторизации
@@ -82,6 +83,10 @@ LOGIN_REDIRECT_URL = 'post_list'  # Адрес после успешной ав�
 
 LOGOUT_REDIRECT_URL = 'post_list'  # Адрес после выходы из системы
 
+ACCOUNT_FORMS = {
+    'login': 'sign.forms.CustomLoginForm',  # Переопределение формы входа в систему
+    'signup': 'sign.forms.CustomSignupForm'  # Переопределение формы регистрации
+}
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 

@@ -13,47 +13,6 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'post_list' %}">Информационный портал</a>
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse"
-                     id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_email' %}">
-                                        Изменить E-mail
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_logout' %}">
-                                        Выйти из системы
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_login' %}">
-                                        Войти в систему
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_signup' %}">
-                                        Зарегистрироваться
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
             </div>
         </nav>
 
