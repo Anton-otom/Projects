@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -48,7 +48,8 @@ class PostDetail(DetailView):
 
 
 # Представление для создания новости
-class NewsCreate(CreateView):
+class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'board_news.add_post'
     form_class = PostForm
     model = Post
     template_name = 'flatpages/news_create.html'
@@ -63,7 +64,8 @@ class NewsCreate(CreateView):
 
 
 # Представление для изменения новости
-class NewsUpdate(LoginRequiredMixin, UpdateView):
+class NewsUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'board_news.change_post'
     form_class = PostForm
     model = Post
     template_name = 'flatpages/news_update.html'
@@ -77,7 +79,8 @@ class NewsDelete(DeleteView):
 
 
 # Представление для создания статьи
-class ArticleCreate(CreateView):
+class ArticleCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = 'board_news.add_post'
     form_class = PostForm
     model = Post
     template_name = 'flatpages/article_create.html'
@@ -93,7 +96,8 @@ class ArticleCreate(CreateView):
 
 
 # Представление для изменения статьи
-class ArticleUpdate(LoginRequiredMixin, UpdateView):
+class ArticleUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = 'board_news.change_post'
     form_class = PostForm
     model = Post
     template_name = 'flatpages/article_update.html'
