@@ -10,18 +10,15 @@
     {% get_providers as socialaccount_providers %}
 
     {% if socialaccount_providers %}
-        <p>Please sign in with one
-        of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-        for a {{ site_name }} account and sign in below:</p>
-
-        <div class="socialaccount_ballot">
-            <ul class="socialaccount_providers">
-                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-            </ul>
-          <div class="login-or">or</div>
-        </div>
+        <hr>
+        <p>
+            Если вы еще не создали учетную запись, пожалуйста,
+            <a href="{{ signup_url }}">зарегистрируйтесь</a> или войдите с помощью:
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </p>
 
         {% include "socialaccount/snippets/login_extra.html" %}
+        <hr>
 
     {% else %}
         <p>Если вы еще не создали учетную запись, пожалуйста,

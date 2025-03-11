@@ -28,8 +28,8 @@ INSTALLED_APPS = [
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
-    'sign'  # Приложение для кастомизации 'allauth'
-    # 'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.yandex',  # Аутентификация и регистрация через Яндекс
+    'sign',  # Приложение для кастомизации 'allauth'
 ]
 
 SITE_ID = 1

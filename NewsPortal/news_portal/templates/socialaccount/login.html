@@ -1,0 +1,20 @@
+{% extends "socialaccount/base.html" %}
+
+{% block head_title %}Войти в систему{% endblock %}
+
+{% block content %}
+    {% if process == "connect" %}
+        <h1>Авторизация {{ provider.name }}</h1>
+
+        <p>Вы собираетесь подключить новую учетную запись {{ provider.name }}</p>
+    {% else %}
+        <h1>Авторизация {{ provider.name }}</h1>
+
+        <p>Вы собираетесь войти в систему, используя стороннюю учетную запись {{ provider.name }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Продолжить</button>
+    </form>
+{% endblock %}
