@@ -1,5 +1,6 @@
 from allauth.account.forms import LoginForm, SignupForm, PasswordField
 from django import forms
+from django.contrib.auth.models import Group
 
 
 # Кастомизация формы из модуля allauth для входа в систему
@@ -32,3 +33,10 @@ class CustomSignupForm(SignupForm):
 
         self.fields['password2'] = PasswordField(label='Пароль (ещё раз)')
         self.fields['password2'].widget.attrs.update({'placeholder': ''})
+
+    # Автоматическое добавление нового пользователя в группу "common"
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        basic_group = Group.objects.get(name='common')
+        basic_group.user_set.add(user)
+        return user
