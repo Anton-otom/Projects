@@ -1,0 +1,30 @@
+{% if user.is_authenticated %}
+    <li class="nav-link active">
+        Пользователь: {{request.user.username}}
+    </li>
+    {% if is_not_author %}
+        <li class="nav-item">
+            <a class="nav-link active"
+               href="{% url 'upgrade' %}">
+                Стать автором
+            </a>
+        </li>
+    {% else %}
+        <li class="nav-link active">
+            Автор
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        <a class="nav-link active"
+            href="{% url 'account_logout' %}">
+                Выйти
+        </a>
+    </li>
+{% else %}
+    <li class="nav-item">
+        <a class="nav-link active"
+            href="{% url 'account_login' %}">
+                Войти
+        </a>
+    </li>
+{% endif %}

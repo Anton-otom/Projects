@@ -1,12 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView
+    ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 )
 
 from .filters import PostFilter
 from .models import Post
 from .forms import PostForm
+
+
+# Представление для дополнения страниц авторизованных пользователей
+class IndexView(LoginRequiredMixin, TemplateView):
+    template_name = 'flatpages/default_auth.html'
 
 
 # Представление для ленты постов

@@ -45,24 +45,7 @@
                                     Добавить статью
                             </a>
                         </li>
-                        {% if user.is_authenticated %}
-                            <li class="nav-link active">
-                                Пользователь: {{request.user.username}}
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_logout' %}">
-                                        Выйти
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{% url 'account_login' %}">
-                                        Войти
-                                </a>
-                            </li>
-                        {% endif %}
+                        {% include 'flatpages/default_auth.html' %}
 <!--                        <li class="nav-item dropdown ">-->
 <!--                            <a class="nav-link dropdown-toggle active"-->
 <!--                               id="navbarDropdown-news"-->
