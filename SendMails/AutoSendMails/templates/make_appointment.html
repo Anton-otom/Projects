@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <title>Запись</title>
+</head>
+<body>
+    <h1>Записаться</h1>
+    <hr>
+    <form action="{% url 'make_appointment' %}" method="post">
+        {% csrf_token %}
+
+        <label for="date">Дата приема:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="client_name">Ваше имя:</label>
+        <input type="text" id="client_name" name="client_name" required><br>
+
+        <label for="message">Сообщение:</label>
+        <textarea id="message" name="message" required></textarea><br>
+
+        <button type="submit">Отправить</button>
+    </form>
+</body>

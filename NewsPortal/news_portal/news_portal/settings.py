@@ -20,11 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',  # Расширение админ-панели
     'django_filters',  # Кастомные фильтры
     'board_news',  # Вывод постов и операции с ними
+
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
@@ -57,7 +59,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request',  # Расширение аутентификации и регистрации
+                # 'django.template.context_processors.request',  # Расширение аутентификации и регистрации
                 'board_news.context_processors.auth_context',  # Проверка на принадлежность к группе "author"
             ],
         },
