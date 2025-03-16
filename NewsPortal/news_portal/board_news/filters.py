@@ -1,6 +1,7 @@
+from django import forms
 from django.forms import DateTimeInput
-from django_filters import FilterSet, CharFilter, IsoDateTimeFilter
-from .models import Post
+from django_filters import FilterSet, CharFilter, IsoDateTimeFilter, ModelMultipleChoiceFilter
+from .models import Post, Category
 
 
 # Фильтры для поиска в списке постов
@@ -20,6 +21,12 @@ class PostFilter(FilterSet):
         label='Пост опубликован после:',
         lookup_expr='gt',
         widget=DateTimeInput(format='%Y-%m-%d %H:%M', attrs={'type': 'datetime-local'})
+    )
+    categories__in = ModelMultipleChoiceFilter(
+        field_name='categories',
+        label='Категория',
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:

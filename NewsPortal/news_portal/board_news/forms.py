@@ -22,6 +22,9 @@ class PostForm(forms.ModelForm):
         widgets = {
             'categories': CheckboxSelectMultiple,
         }
+        required = [
+            'categories'
+        ]
 
     def clean(self):
         cleaned_data = super().clean()

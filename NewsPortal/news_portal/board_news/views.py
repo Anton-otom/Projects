@@ -37,6 +37,7 @@ class PostSearch(PostList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
+        context['has_filters'] = any(self.request.GET.values())
         return context
 
 
