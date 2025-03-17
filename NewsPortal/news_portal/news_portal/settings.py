@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'fpages',  # Расширение админ-панели
     'django_filters',  # Кастомные фильтры
-    'board_news',  # Вывод постов и операции с ними
+
+    'board_news.apps.board_newsConfig',  # Вывод постов и операции с ними
 
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
@@ -77,19 +78,27 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводить e-mail
 ACCOUNT_UNIQUE_EMAIL = True  # E-mail должен быть уникальным
 ACCOUNT_USERNAME_REQUIRED = True  # При регистрации обязательно вводить username
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # Верификация e-mail отсутствует
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username или e-mail
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Верификация e-mail обязательна
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''  # Убрать префикс "[sitename]" в теме письма подтверждения регистрации
 
 LOGIN_URL = 'account_login'  # Адрес авторизации
-
 LOGIN_REDIRECT_URL = 'post_list'  # Адрес после успешной авторизации
-
 LOGOUT_REDIRECT_URL = 'post_list'  # Адрес после выходы из системы
 
 ACCOUNT_FORMS = {
     'login': 'sign.forms.CustomLoginForm',  # Переопределение формы входа в систему
     'signup': 'sign.forms.CustomSignupForm'  # Переопределение формы регистрации
 }
+
+# Настройки эл. почты приложения
+EMAIL_HOST = 'smtp.yandex.ru'  # Адрес сервера Яндекс-почты
+EMAIL_PORT = 465  # Порт smtp сервера
+EMAIL_HOST_USER = ''  # Эл. почта без @yandex.ru
+EMAIL_HOST_PASSWORD = ''  # Пароль доступа к API Яндекс-почты
+EMAIL_USE_SSL = True  # SSL включен
+SERVER_EMAIL = ''  # Эл. почта для массовых рассылок
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'  # Эл. почта для отправки писем через allauth
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
