@@ -26,16 +26,17 @@ INSTALLED_APPS = [
     'fpages',  # Расширение админ-панели
     'django_filters',  # Кастомные фильтры
 
-    'board_news.apps.board_newsConfig',  # Вывод постов и операции с ними
+    'board_news.apps.BoardNewsConfig',  # Вывод постов и операции с ними
 
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
     'allauth.socialaccount.providers.yandex',  # Аутентификация и регистрация через Яндекс
-    'sign',  # Приложение для кастомизации 'allauth'
+    'sign.apps.SignConfig',  # Приложение для кастомизации 'allauth'
 ]
 
 SITE_ID = 1
+SITE_URL = 'http://127.0.0.1:8000/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,11 +76,15 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
 ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводить e-mail
 ACCOUNT_UNIQUE_EMAIL = True  # E-mail должен быть уникальным
 ACCOUNT_USERNAME_REQUIRED = True  # При регистрации обязательно вводить username
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username или e-mail
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Верификация e-mail обязательна
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Верификация e-mail необязательна
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Верификация e-mail обязательна
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''  # Убрать префикс "[sitename]" в теме письма подтверждения регистрации
 
 LOGIN_URL = 'account_login'  # Адрес авторизации
@@ -92,6 +97,7 @@ ACCOUNT_FORMS = {
 }
 
 # Настройки эл. почты приложения
+
 EMAIL_HOST = 'smtp.yandex.ru'  # Адрес сервера Яндекс-почты
 EMAIL_PORT = 465  # Порт smtp сервера
 EMAIL_HOST_USER = ''  # Эл. почта без @yandex.ru
@@ -99,6 +105,7 @@ EMAIL_HOST_PASSWORD = ''  # Пароль доступа к API Яндекс-по
 EMAIL_USE_SSL = True  # SSL включен
 SERVER_EMAIL = ''  # Эл. почта для массовых рассылок
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'  # Эл. почта для отправки писем через allauth
+
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
