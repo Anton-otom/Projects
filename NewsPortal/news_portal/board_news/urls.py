@@ -3,7 +3,7 @@ from .views import (
     PostList, PostDetail, PostSearch,
     NewsCreate, NewsUpdate, NewsDelete,
     ArticleCreate, ArticleUpdate, ArticleDelete,
-    subscribe_category, unsubscribe_category,
+    subscribe_category, unsubscribe_category, news_limit_reached,
 )
 
 
@@ -32,6 +32,10 @@ urlpatterns = [
     path('news/<int:pk>/delete/',
          NewsDelete.as_view(),
          name='news_delete'),
+    # Адрес страницы с сообщением о превышении лимита публикаций
+    path('news/limit_reached/',
+         news_limit_reached,
+         name='news_limit_reacher'),
     # Адрес страницы добавления статьи
     path('article/create/',
          ArticleCreate.as_view(),

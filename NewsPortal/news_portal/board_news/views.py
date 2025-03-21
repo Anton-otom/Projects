@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 )
 
+from .utils import can_user_add_post
 from .filters import PostFilter
 from .models import Post, Category, Author
 from .forms import PostForm
@@ -73,6 +74,11 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/news_create.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not can_user_add_post(request.user):
+            return redirect(reverse('news_limit_reacher'))
+        return super().dispatch(request, *args, **kwargs)
 
     # Установить тип поста "новость" и определить автора
     def form_valid(self, form):
@@ -150,3 +156,9 @@ def unsubscribe_category(request, category_id):
     params = request.GET.copy()
     redirect_url = reverse('post_search') + '?' + params.urlencode()
     return redirect(redirect_url)
+
+
+# Представление для информирования о превышении лимита добавления новостей в день
+def news_limit_reached(request):
+    return render(request, 'flatpages/news_limit_reached.html')
+

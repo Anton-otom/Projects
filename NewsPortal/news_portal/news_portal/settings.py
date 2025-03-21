@@ -97,7 +97,6 @@ ACCOUNT_FORMS = {
 }
 
 # Настройки эл. почты приложения
-
 EMAIL_HOST = 'smtp.yandex.ru'  # Адрес сервера Яндекс-почты
 EMAIL_PORT = 465  # Порт smtp сервера
 EMAIL_HOST_USER = ''  # Эл. почта без @yandex.ru
