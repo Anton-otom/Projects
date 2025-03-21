@@ -15,12 +15,25 @@
         {{ filterset.form.as_p }}
         <input type="submit" value="Найти">
         {% if has_filters %}
-            <br><a href="{% url 'post_search' %}">Сбросить фильтры</a>
+            <br><a href="{% url 'post_search' %}">Сбросить фильтры</a><br><br>
+            {% for item in categories_with_subscription_status %}
+                {{ item.category.category_name }}
+                {% if not item.is_subscribed %}
+                    <a href="{% url 'subscribe_category' item.category.id %}?{% url_replace %}">
+                        Подписаться
+                    </a>
+                {% else %}
+                    <a href="{% url 'unsubscribe_category' item.category.id %}?{% url_replace %}">
+                        Отписаться
+                    </a>
+                {% endif %}
+                <br>
+            {% endfor %}
         {% endif %}
     </form>
     <hr>
 
-    <h3>Выведено постов: {{ posts|length }}</h3>
+    <h3>Постов с выбранными параметрами: {{ posts|length }}</h3>
     <!--Таблица вывода новостей-->
     {% if posts %}
         <table align="center">

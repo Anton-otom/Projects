@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
+# Модель для авторов постов
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
@@ -28,13 +29,22 @@ class Author(models.Model):
         self.save()
 
 
+# Модель категорий постов
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
+    subscribers = models.ManyToManyField(User, through='CategoryUser', blank=True)
 
     def __str__(self):
         return self.category_name.title()
 
 
+# Модель связи категорий и пользователей для поля "subscribers" модели "Category"
+class CategoryUser(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+# Модель для постов
 class Post(models.Model):
     news = 'nw'
     article = 'ar'
@@ -73,11 +83,13 @@ class Post(models.Model):
         self.save()
 
 
+# Модель связи постов и категорий для поля "categories" модели "Post"
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
+# Модель для комментариев к постам
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)

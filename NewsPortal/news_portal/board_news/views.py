@@ -1,11 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 )
 
 from .filters import PostFilter
-from .models import Post
+from .models import Post, Category, Author
 from .forms import PostForm
 
 
@@ -33,11 +35,28 @@ class PostSearch(PostList):
         self.filterset = PostFilter(self.request.GET, queryset)
         return self.filterset.qs
 
-    # Добавить в контекст отфильтрованные посты
+    # Обновить контекст
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Отфильтровать посты
         context['filterset'] = self.filterset
+        # True, если применён хотя бы один фильтр
+        # Для отображения кнопки "Сбросить фильтры"
         context['has_filters'] = any(self.request.GET.values())
+        # Передать информацию, есть ли подписчики у выбранных для фильтрации категорий
+        selected_categories = self.filterset.form.cleaned_data.get('categories__in', [])
+        if selected_categories:
+            categories_with_subscription_status = []
+            for category in selected_categories:
+                is_subscribed = category.subscribers.filter(id=self.request.user.id).exists()
+                categories_with_subscription_status.append({
+                    'category': category,
+                    'is_subscribed': is_subscribed,
+                })
+            context['categories_with_subscription_status'] = categories_with_subscription_status
+        else:
+            context['categories_with_subscription_status'] = []
+
         return context
 
 
@@ -58,9 +77,10 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     # Установить тип поста "новость" и определить автора
     def form_valid(self, form):
         post = form.save(commit=False)
-        post.author_post_id = 1
+        post.author_post = Author.objects.get(user_id=self.request.user.id)
         post.type_post = 'nw'
         post.save()
+        form.save_m2m()
         return super().form_valid(form)
 
 
@@ -90,9 +110,10 @@ class ArticleCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     # Установить тип поста "статья" и определить автора
     def form_valid(self, form):
         post = form.save(commit=False)
-        post.author_post_id = 2
+        post.author_post = Author.objects.get(user_id=self.request.user.id)
         post.type_post = 'ar'
         post.save()
+        form.save_m2m()
         return super().form_valid(form)
 
 
@@ -109,3 +130,23 @@ class ArticleDelete(DeleteView):
     model = Post
     template_name = 'flatpages/article_delete.html'
     success_url = reverse_lazy('post_list')
+
+
+# Представление для подписки на категорию
+@login_required
+def subscribe_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.subscribers.add(request.user)
+    params = request.GET.copy()
+    redirect_url = reverse('post_search') + '?' + params.urlencode()
+    return redirect(redirect_url)
+
+
+# Представление для отписки с категории
+@login_required
+def unsubscribe_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.subscribers.remove(request.user)
+    params = request.GET.copy()
+    redirect_url = reverse('post_search') + '?' + params.urlencode()
+    return redirect(redirect_url)

@@ -36,7 +36,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
-SITE_URL = 'http://127.0.0.1:8000/'
+SITE_URL = 'http://127.0.0.1:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
