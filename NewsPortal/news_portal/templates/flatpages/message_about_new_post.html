@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оповещение</title>
+</head>
+<body>
+    <h2>Здравствуй, {{ username }}. Новый пост в твоём любимом разделе!</h2>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.text|truncatechars:50 }}</p>
+    <a href="{{ site_url }}{% url 'post_detail' post.pk %}">Читать полностью</a>
+</body>
+</html>

@@ -25,16 +25,20 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'fpages',  # Расширение админ-панели
     'django_filters',  # Кастомные фильтры
-    'board_news',  # Вывод постов и операции с ними
+
+    'board_news.apps.BoardNewsConfig',  # Вывод постов и операции с ними
 
     'allauth',  # Расширение аутентификации и регистрации
     'allauth.account',  # Расширение аутентификации и регистрации
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
     'allauth.socialaccount.providers.yandex',  # Аутентификация и регистрация через Яндекс
-    'sign',  # Приложение для кастомизации 'allauth'
+    'sign.apps.SignConfig',  # Приложение для кастомизации 'allauth'
+
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
+SITE_URL = 'http://127.0.0.1:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,7 +64,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # 'django.template.context_processors.request',  # Расширение аутентификации и регистрации
-                'board_news.context_processors.auth_context',  # Проверка на принадлежность к группе "author"
+                'board_news.context_processors.auth_context',
             ],
         },
     },
@@ -74,22 +78,35 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
 ACCOUNT_EMAIL_REQUIRED = True  # При регистрации обязательно вводить e-mail
 ACCOUNT_UNIQUE_EMAIL = True  # E-mail должен быть уникальным
 ACCOUNT_USERNAME_REQUIRED = True  # При регистрации обязательно вводить username
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # Верификация e-mail отсутствует
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Аутентификация проводится по username или e-mail
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Верификация e-mail необязательна
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Верификация e-mail обязательна
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''  # Убрать префикс "[sitename]" в теме письма подтверждения регистрации
 
 LOGIN_URL = 'account_login'  # Адрес авторизации
-
 LOGIN_REDIRECT_URL = 'post_list'  # Адрес после успешной авторизации
-
 LOGOUT_REDIRECT_URL = 'post_list'  # Адрес после выходы из системы
 
 ACCOUNT_FORMS = {
     'login': 'sign.forms.CustomLoginForm',  # Переопределение формы входа в систему
     'signup': 'sign.forms.CustomSignupForm'  # Переопределение формы регистрации
 }
+
+# Настройки эл. почты приложения
+EMAIL_HOST = 'smtp.yandex.ru'  # Адрес сервера Яндекс-почты
+EMAIL_PORT = 465  # Порт smtp сервера
+EMAIL_HOST_USER = ''  # Эл. почта без @yandex.ru
+EMAIL_HOST_PASSWORD = ''  # Пароль доступа к API Яндекс-почты
+EMAIL_USE_SSL = True  # SSL включен
+SERVER_EMAIL = ''  # Эл. почта для массовых рассылок
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'  # Эл. почта для отправки писем через allauth
+
 
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
@@ -120,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -134,3 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+
+# Настройки форматов даты\времени и времени на выполнение задач модуля apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

@@ -14,22 +14,55 @@
     <form action="" method="get">
         {{ filterset.form.as_p }}
         <input type="submit" value="Найти">
+        {% if has_filters %}
+            <br><a href="{% url 'post_search' %}">Сбросить фильтры</a><br><br>
+            {% for item in categories_with_subscription_status %}
+                {{ item.category.category_name }}
+                {% if not item.is_subscribed %}
+                    <a href="{% url 'subscribe_category' item.category.id %}?{% url_replace %}">
+                        Подписаться
+                    </a>
+                {% else %}
+                    <a href="{% url 'unsubscribe_category' item.category.id %}?{% url_replace %}">
+                        Отписаться
+                    </a>
+                {% endif %}
+                <br>
+            {% endfor %}
+        {% endif %}
     </form>
     <hr>
 
+    <h3>Постов с выбранными параметрами: {{ posts|length }}</h3>
     <!--Таблица вывода новостей-->
     {% if posts %}
         <table align="center">
             <tr>
                 <td>Заголовок</td>
+                <td>Категория</td>
                 <td>Дата публикации</td>
                 <td>Превью</td>
             </tr>
             {% for post in posts %}
                 <tr>
                     <td align="left">{{ post.title|censor }}</td>
-                    <td>{{ post.date_time_in|date:'d M Y H:i' }}</td>
-                    <td>{{ post.text|censor|truncatechars:21 }}</td>
+                    <td align="left"
+                        width="110"
+                        height="70">
+                        {% for category in post.categories.all %}
+                            {{ category.category_name }}<br>
+                        {% endfor %}
+                    </td>
+                    <td width="150">{{ post.date_time_in|date:'d M Y H:i' }}</td>
+                    <td align="left">{{ post.text|censor|truncatechars:21 }}</td>
+                    <td><a href="{% url 'post_detail' post.pk %}">Перейти</a></td>
+                    {% if post.type_post == 'nw' %}
+                        <td><a href="{% url 'news_update' post.pk %}">Изменить</a></td>
+                        <td><a href="{% url 'news_delete' post.pk %}">Удалить</a></td>
+                    {% elif post.type_post == 'ar' %}
+                        <td><a href="{% url 'article_update' post.pk %}">Изменить</a></td>
+                        <td><a href="{% url 'article_delete' post.pk %}">Удалить</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
