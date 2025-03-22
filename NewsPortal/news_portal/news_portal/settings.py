@@ -1,9 +1,16 @@
 import os
 
+from dotenv import load_dotenv
 from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Загрузка переменных из .env
+dotenv_path = BASE_DIR / '.env'
+if dotenv_path.exists():
+    load_dotenv(dotenv_path)
 
 
 SECRET_KEY = 'django-insecure-51whj5s@syzg4#l7l-r0_#7d2_(dqeshmzh$386x!l#7=ng$$n'
@@ -101,10 +108,10 @@ ACCOUNT_FORMS = {
 # Настройки эл. почты приложения
 EMAIL_HOST = 'smtp.yandex.ru'  # Адрес сервера Яндекс-почты
 EMAIL_PORT = 465  # Порт smtp сервера
-EMAIL_HOST_USER = ''  # Эл. почта без @yandex.ru
-EMAIL_HOST_PASSWORD = ''  # Пароль доступа к API Яндекс-почты
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Эл. почта без @yandex.ru
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Пароль доступа к API Яндекс-почты
 EMAIL_USE_SSL = True  # SSL включен
-SERVER_EMAIL = ''  # Эл. почта для массовых рассылок
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')  # Эл. почта для массовых рассылок
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'  # Эл. почта для отправки писем через allauth
 
 

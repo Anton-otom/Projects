@@ -48,7 +48,7 @@ def send_mail_on_post_create(sender, instance, action, **kwargs):
             msg = EmailMultiAlternatives(
                 subject=instance.title,
                 body=instance.text,
-                from_email='anthon.sev@yandex.ru',
+                from_email='DEFAULT_FROM_EMAIL',
                 to=[value_email],
             )
             msg.attach_alternative(html_content, "text/html")
