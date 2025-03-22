@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
     'allauth.socialaccount.providers.yandex',  # Аутентификация и регистрация через Яндекс
     'sign.apps.SignConfig',  # Приложение для кастомизации 'allauth'
+
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -135,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -149,3 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+
+# Настройки форматов даты\времени и времени на выполнение задач модуля apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

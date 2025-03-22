@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Еженедельная рассылка</title>
+</head>
+<body>
+    <h2>Здравствуйте, {{ username }}!</h2>
+    <h3>Новые посты в вашей любимой категории:</h3>
+
+    <ul>
+    {% for post in posts %}
+        <li>
+            <a href="{{ site_url }}{% url 'post_detail' post.pk %}">
+                {{ post.title }}
+            </a>
+            <p>{{ post.text|truncatechars:50 }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <p>Всего новых постов: {{ posts|length }}</p>
+</body>
+</html>
