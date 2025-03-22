@@ -76,6 +76,8 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = 'flatpages/news_create.html'
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
         if not can_user_add_post(request.user):
             return redirect(reverse('news_limit_reacher'))
         return super().dispatch(request, *args, **kwargs)
