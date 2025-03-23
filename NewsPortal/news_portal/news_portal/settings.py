@@ -163,3 +163,15 @@ STATICFILES_DIRS = [
 # Настройки форматов даты\времени и времени на выполнение задач модуля apscheduler
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+
+# URL брокера сообщений
+CELERY_BROKER_URL = 'redis://localhost:6379'
+# Хранилище результатов выполнения задач
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# Допустимый формат данных
+CELERY_ACCEPT_CONTENT = ['application/json']
+# Метод сериализации задач
+CELERY_TASK_SERIALIZER = 'json'
+# Метод сериализации результатов
+CELERY_RESULT_SERIALIZER = 'json'
