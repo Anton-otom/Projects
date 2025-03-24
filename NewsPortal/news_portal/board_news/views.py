@@ -10,6 +10,7 @@ from .utils import can_user_add_post
 from .filters import PostFilter
 from .models import Post, Category, Author
 from .forms import PostForm
+from .tasks import send_email_on_post_create
 
 
 # Представление для дополнения страниц авторизованных пользователей
@@ -89,6 +90,7 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         post.type_post = 'nw'
         post.save()
         form.save_m2m()
+        send_email_on_post_create.delay(post_id=post.id)
         return super().form_valid(form)
 
 
@@ -122,6 +124,7 @@ class ArticleCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         post.type_post = 'ar'
         post.save()
         form.save_m2m()
+        send_email_on_post_create.delay(post_id=post.id)
         return super().form_valid(form)
 
 
