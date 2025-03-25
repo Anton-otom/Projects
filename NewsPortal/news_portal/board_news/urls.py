@@ -1,4 +1,6 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+
 from .views import (
     PostList, PostDetail, PostSearch,
     NewsCreate, NewsUpdate, NewsDelete,
@@ -10,7 +12,7 @@ from .views import (
 urlpatterns = [
     # Адрес страницы со всеми постами
     path('',
-         PostList.as_view(),
+         cache_page(60)(PostList.as_view()),
          name='post_list'),
     # Адрес страницы для поиска по всем постам
     path('search/',

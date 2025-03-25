@@ -1,6 +1,6 @@
+from django.core.cache import cache
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
 
 
 # Модель для авторов постов
@@ -66,7 +66,14 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return f'/posts/{self.id}'
+
+    # Переопределить метод для удаления поста из кэша при обновлении
+    def save(self, *args, **kwargs):
+        if self.pk:
+            cache.delete(f'post-{self.pk}')
+        super().save(*args, **kwargs)
+        cache.set(f'post-{self.pk}', self)
 
     def preview(self):
         if len(self.text) > 124:

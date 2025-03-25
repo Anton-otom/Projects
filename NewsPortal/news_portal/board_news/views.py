@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.cache import cache
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import (
@@ -67,6 +68,19 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'flatpages/post.html'
     context_object_name = 'post'
+
+    # Переопределить метод GET для кеширования страницы
+    def get_object(self, *args, **kwargs):
+        print("Начало кэширования")
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+        if not obj:
+            print('Такой страницы в кэше нет, добавить')
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+            print("Страница добавлена в кэш")
+        else:
+            print("Страница в кэше, загрузить")
+        return obj
 
 
 # Представление для создания новости
