@@ -71,15 +71,10 @@ class PostDetail(DetailView):
 
     # Переопределить метод GET для кеширования страницы
     def get_object(self, *args, **kwargs):
-        print("Начало кэширования")
         obj = cache.get(f'post-{self.kwargs["pk"]}', None)
         if not obj:
-            print('Такой страницы в кэше нет, добавить')
             obj = super().get_object(queryset=self.queryset)
             cache.set(f'post-{self.kwargs["pk"]}', obj)
-            print("Страница добавлена в кэш")
-        else:
-            print("Страница в кэше, загрузить")
         return obj
 
 

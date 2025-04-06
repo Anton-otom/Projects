@@ -68,7 +68,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return f'/posts/{self.id}'
 
-    # Переопределить метод для удаления поста из кэша при обновлении
+    # Переопределить метод для удаления поста из кэша при его обновлении
     def save(self, *args, **kwargs):
         if self.pk:
             cache.delete(f'post-{self.pk}')

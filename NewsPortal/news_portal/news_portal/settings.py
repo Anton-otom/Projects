@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # Расширение аутентификации и регистрации
     'allauth.socialaccount.providers.yandex',  # Аутентификация и регистрация через Яндекс
     'sign.apps.SignConfig',  # Приложение для кастомизации 'allauth'
-
-    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -88,7 +86,7 @@ AUTHENTICATION_BACKENDS = [
 # Настройки кэширования
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
     }
 }
