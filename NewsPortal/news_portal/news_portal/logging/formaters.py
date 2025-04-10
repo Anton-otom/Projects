@@ -3,9 +3,9 @@ import logging
 
 class CustomConsoleFormatter(logging.Formatter):
     def format(self, record):
-        message = super().format(record)
+        base_format = f"{record.asctime} {record.levelname} {record.message}"
         if record.levelno >= logging.WARNING:
-            message += f" | {record.pathname}"
+            base_format += f" | {record.pathname}"
         if record.levelno >= logging.ERROR and record.exc_info:
-            message += f"\n{self.formatException(record.exc_info)}"
-        return message
+            base_format += f"\n{self.formatException(record.exc_info)}"
+        return base_format
